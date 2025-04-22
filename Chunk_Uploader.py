@@ -5,6 +5,10 @@ import math
 import socket
 from datetime import datetime
 
+#Our imports
+import ssl
+
+
 #Color
 import colorama
 from colorama import Fore, Back, Style
@@ -42,6 +46,10 @@ temp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 temp_sock.connect(('8.8.8.8', 80))
 SERVER_IP = temp_sock.getsockname()[0]
 temp_sock.close()
+
+#TSL STUFF
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+context.load_cert_chain(certfile='cert.pem', keyfile='key.pem')
 
 # Create and configure the socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -86,10 +94,11 @@ while True:
     try:
         # Accept incoming connections
         conn, addr = sock.accept()
+        secure_conn = context.wrap_socket(conn, server_side=True)
         print(Fore.GREEN + 'Connected to client with address: ' + Fore.RESET + addr[0])
 
         # Receive the requested chunk name
-        reqJSON = conn.recv(BUFFER_SIZE).decode()
+        reqJSON = secure_conn.recv(BUFFER_SIZE).decode()
         file = json.loads(reqJSON)
         print(Fore.YELLOW + file['filename'] + ' was requested.')
         reqJSON = json.loads(reqJSON)
@@ -102,7 +111,7 @@ while True:
             # print(len(msg))
 
             while totalsent < len(msg):
-                sent = conn.send(msg[totalsent:])
+                sent = secure_conn.send(msg[totalsent:])
                 totalsent += sent
                 print(Fore.CYAN + 'Sent ' + str(sent))
                 # print(Back.CYAN + '=' * 70)
@@ -118,11 +127,11 @@ while True:
                 dt_string = now.strftime('%d/%m/%Y %H:%M:%S')
                 up_log.write(dt_string + ' ' + requestedChunkName + ' to ' + str(addr[0]) + '\n')
 
-        conn.close()
+        secure_conn.close()
 
     except KeyboardInterrupt:
         print(Fore.RED + '<SERVER>: TCP Server Closed')
-        conn.close()
+        secure_conn.close()
         sock.close()
         sys.exit()
 
