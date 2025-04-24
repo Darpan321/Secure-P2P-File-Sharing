@@ -18,3 +18,8 @@
 12/04/2025 13:17:12 test_text.txt_3_temp to 192.168.0.111
 12/04/2025 13:17:12 test_text.txt_4_temp to 192.168.0.111
 12/04/2025 13:17:12 test_text.txt_5_temp to 192.168.0.111
+22/04/2025 14:05:07 test_text.txt_1_temp to 192.168.1.220
+22/04/2025 14:05:07 test_text.txt_2_temp to 192.168.1.220
+22/04/2025 14:05:07 test_text.txt_3_temp to 192.168.1.220
+22/04/2025 14:05:07 test_text.txt_4_temp to 192.168.1.220
+22/04/2025 14:05:08 test_text.txt_5_temp to 192.168.1.220

@@ -4,6 +4,11 @@ import json
 import socket
 from datetime import datetime
 
+
+#Our imports
+import ssl
+
+
 #Color
 import colorama
 from colorama import Fore, Back, Style
@@ -69,17 +74,19 @@ while True:
         # Iterate through IPs associated with the chunk for downloading
         for ip in contentFile_data[chunkToDownload]:
             print(f'Requesting {ip} for ' + Fore.YELLOW + f'{chunkToDownload}' + Fore.RESET)
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.settimeout(10)
+            context = ssl._create_unverified_context()  # for testing; skips cert verification
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            secure_sock = context.wrap_socket(sock, server_hostname=ip)
+            secure_sock.settimeout(10)
             try:
-                s.connect((ip, PORT))
-                s.send(requestJSON)
+                secure_sock.connect((ip, PORT))
+                secure_sock.send(requestJSON)
                 print(Fore.YELLOW + file['filename'] + ' was requested.')
-                downloadedChunk = s.recv(BUFFER_SIZE)
+                downloadedChunk = secure_sock.recv(BUFFER_SIZE)
 
                 # Receive remaining data
                 while True:
-                    msg = s.recv(BUFFER_SIZE)
+                    msg = secure_sock.recv(BUFFER_SIZE)
                     if not msg:
                         break
                     downloadedChunk += bytes(msg)
@@ -87,7 +94,7 @@ while True:
                 chunkIsDownloaded = True
 
             except Exception as e:
-                s.close()
+                secure_sock.close()
                 print('Could not download ' + chunkToDownload + ' from ' + ip)
                 print('Error: ', e)
                 # print(Back.CYAN + '=' * 70)
@@ -107,7 +114,7 @@ while True:
             with open('downloaded_files/' + chunkToDownload, 'wb') as downloadedFile:
                 downloadedFile.write(downloadedChunk)
 
-            s.close()
+            secure_sock.close()
             print(Fore.GREEN + 'Chunk downloaded successfully!\n')
             # print(Back.CYAN + '=' * 70)
 
