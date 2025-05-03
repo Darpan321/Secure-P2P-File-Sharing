@@ -7,7 +7,7 @@ from datetime import datetime
 
 #Our imports
 import ssl
-
+import hashlib
 
 #Color
 import colorama
@@ -63,6 +63,10 @@ while True:
 
     selectedFileIndex = int(input('> '))
 
+    hash_file_path = f"json_files/{availableFiles[selectedFileIndex]}_hashes.json"
+    with open(hash_file_path, 'r') as hash_file:
+        chunk_hashes = json.load(hash_file)
+
     allChunksDownloaded = True
     # Iterate through chunks to download them
     for i in range(1, 6):
@@ -113,6 +117,18 @@ while True:
 
             with open('downloaded_files/' + chunkToDownload, 'wb') as downloadedFile:
                 downloadedFile.write(downloadedChunk)
+
+            # Verify hash
+            sha256 = hashlib.sha256()
+            sha256.update(downloadedChunk)
+            downloaded_hash = sha256.hexdigest()
+            expected_hash = chunk_hashes.get(chunkToDownload)
+
+            if downloaded_hash == expected_hash:
+                print(Fore.GREEN + f"Integrity check passed for {chunkToDownload}")
+            else:
+                print(Fore.RED + f"Integrity check FAILED for {chunkToDownload}")
+
 
             secure_sock.close()
             print(Fore.GREEN + 'Chunk downloaded successfully!\n')
