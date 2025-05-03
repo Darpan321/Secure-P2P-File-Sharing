@@ -7,7 +7,7 @@ from datetime import datetime
 
 #Our imports
 import ssl
-
+import hashlib
 
 #Color
 import colorama
@@ -19,7 +19,7 @@ colorama.init(autoreset=True)
 SERVER_PORT = 5000
 BUFFER_SIZE = 4096
 
-def sliceFile(content_name:str) -> None:
+def sliceFile(content_name:str) -> list:
     # Create the directory for sliced_files
     if not os.path.exists('sliced_files'):
         os.makedirs('sliced_files')
@@ -29,6 +29,8 @@ def sliceFile(content_name:str) -> None:
     c = os.path.getsize(fileURL)
     CHUNK_SIZE = math.ceil(math.ceil(c) / 5)
     
+    chunk_hashes = []
+
     index = 1
     with open(fileURL, 'rb') as infile:
         chunk = infile.read(int(CHUNK_SIZE))
@@ -37,9 +39,18 @@ def sliceFile(content_name:str) -> None:
             chunk_addr = 'sliced_files/' + chunkname
             with open(chunk_addr, 'wb+') as chunk_file:
                 chunk_file.write(chunk)
+
+            #Hash this chunk
+            sha256 = hashlib.sha256()
+            sha256.update(chunk)
+            chunk_hashes.append(sha256.hexdigest())
+
             index += 1
             chunk = infile.read(int(CHUNK_SIZE))
     chunk_file.close()
+
+    #Return the list of hashes
+    return chunk_hashes 
 
 # Get the server IP address
 temp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -86,7 +97,22 @@ def delete_files_in_folder(folder_path:str) -> None:
 delete_files_in_folder(folder_path=folder_name)
 
 # Slice the selected file into chunks
-sliceFile(selectedFileName)
+chunk_hashes = sliceFile(selectedFileName)
+
+# Save chunk hashes to JSON
+if not os.path.exists('json_files'):
+    os.makedirs('json_files')
+
+hash_dict = {}
+for i, hash_value in enumerate(chunk_hashes, start=1):
+    chunk_name = f"{selectedFileName}_{i}_temp"
+    hash_dict[chunk_name] = hash_value
+
+hash_file_path = f"json_files/{selectedFileName}_hashes.json"
+with open(hash_file_path, 'w') as hash_file:
+    json.dump(hash_dict, hash_file)
+
+print(Fore.GREEN + 'Chunk hashes saved for integrity verification.')
 
 print(Fore.GREEN + '<SERVER>: TCP Server Started')
 
