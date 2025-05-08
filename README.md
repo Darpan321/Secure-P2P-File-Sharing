@@ -81,3 +81,4 @@ Enter the Ngrok host and port when prompted.
 ## 🤝 Contributors
 
 - Darpan Patel [[GitHub](https://github.com/Darpan321)]
+- Harshil Patel [[GitHub](https://github.com/SliverSoul1010)]
