@@ -23,3 +23,28 @@
 22/04/2025 14:05:07 test_text.txt_3_temp to 192.168.1.220
 22/04/2025 14:05:07 test_text.txt_4_temp to 192.168.1.220
 22/04/2025 14:05:08 test_text.txt_5_temp to 192.168.1.220
+2025-05-05 02:12:19.810014 - test_text.txt_1_temp to 192.168.0.111
+2025-05-05 02:12:19.872515 - test_text.txt_2_temp to 192.168.0.111
+2025-05-05 02:12:19.904309 - test_text.txt_3_temp to 192.168.0.111
+2025-05-05 02:12:19.951114 - test_text.txt_4_temp to 192.168.0.111
+2025-05-05 02:12:19.983333 - test_text.txt_5_temp to 192.168.0.111
+2025-05-05 02:12:40.875424 - test_text.txt_1_temp to 192.168.0.111
+2025-05-05 02:12:40.912465 - test_text.txt_2_temp to 192.168.0.111
+2025-05-05 02:12:40.923004 - test_text.txt_3_temp to 192.168.0.111
+2025-05-05 02:12:40.948184 - test_text.txt_4_temp to 192.168.0.111
+2025-05-05 02:12:40.970366 - test_text.txt_5_temp to 192.168.0.111
+2025-05-05 10:48:14.446663 - test_dataset.csv_1_temp to 192.168.0.111
+2025-05-05 10:48:14.493969 - test_dataset.csv_2_temp to 192.168.0.111
+2025-05-05 10:48:14.556945 - test_dataset.csv_3_temp to 192.168.0.111
+2025-05-05 10:48:14.588241 - test_dataset.csv_4_temp to 192.168.0.111
+2025-05-05 10:48:14.622869 - test_dataset.csv_5_temp to 192.168.0.111
+2025-05-05 15:20:59.126520 - Sent test_text.txt_1_temp to 127.0.0.1
+2025-05-05 15:20:59.186027 - Sent test_text.txt_2_temp to 127.0.0.1
+2025-05-05 15:20:59.239135 - Sent test_text.txt_3_temp to 127.0.0.1
+2025-05-05 15:20:59.295802 - Sent test_text.txt_4_temp to 127.0.0.1
+2025-05-05 15:20:59.351442 - Sent test_text.txt_5_temp to 127.0.0.1
+2025-05-05 15:29:09.539941 - Sent test_text.txt_1_temp to 127.0.0.1
+2025-05-05 15:29:09.604941 - Sent test_text.txt_2_temp to 127.0.0.1
+2025-05-05 15:29:09.660961 - Sent test_text.txt_3_temp to 127.0.0.1
+2025-05-05 15:29:09.734182 - Sent test_text.txt_4_temp to 127.0.0.1
+2025-05-05 15:29:09.796588 - Sent test_text.txt_5_temp to 127.0.0.1

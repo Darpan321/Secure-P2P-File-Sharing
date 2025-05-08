@@ -1,1 +1,9 @@
-{"test_text.txt_1_temp": ["192.168.1.220"], "test_text.txt_2_temp": ["192.168.1.220"], "test_text.txt_3_temp": ["192.168.1.220"], "test_text.txt_4_temp": ["192.168.1.220"], "test_text.txt_5_temp": ["192.168.1.220"]}
+{
+    "test_text.txt": [
+        "test_text.txt_1_temp",
+        "test_text.txt_2_temp",
+        "test_text.txt_3_temp",
+        "test_text.txt_4_temp",
+        "test_text.txt_5_temp"
+    ]
+}
